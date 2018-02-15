@@ -16,9 +16,6 @@ import com.tychecash.tychexplore.service.TycheExploreService;
 @RestController
 public class TycheRestController {
     
-    @Autowired
-    private TycheExploreService tycheExploreService;
-    
     
     
 }
