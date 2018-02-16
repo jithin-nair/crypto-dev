@@ -5,10 +5,15 @@
  */
 package com.tychecash.tychexplore.service;
 
+import com.tychecash.tychexplore.model.response.BlockResponse;
+
 /**
  *
  * @author jithin
  */
 public interface TycheExploreService {
-    
+    public BlockResponse getBlockResponseByHeight(String height);
+    public BlockResponse getBlockResponseByHash(String hash);
+    public BlockResponse getLastBlockResponse();
+    public BlockResponse getLastNBlockResponseFromHeight(String height,Integer size);
 }
