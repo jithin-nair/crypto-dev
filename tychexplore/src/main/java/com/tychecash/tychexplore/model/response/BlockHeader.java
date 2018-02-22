@@ -17,7 +17,7 @@ public class BlockHeader {
 
     private String minor_version;
 
-    private String height;
+    private Integer height;
 
     private String reward;
 
@@ -57,11 +57,11 @@ public class BlockHeader {
         this.minor_version = minor_version;
     }
 
-    public String getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 

@@ -5,6 +5,8 @@
  */
 package com.tychecash.tychexplore.service;
 
+import java.util.List;
+
 import com.tychecash.tychexplore.model.response.BlockResponse;
 
 /**
@@ -15,5 +17,5 @@ public interface TycheExploreService {
     public BlockResponse getBlockResponseByHeight(String height);
     public BlockResponse getBlockResponseByHash(String hash);
     public BlockResponse getLastBlockResponse();
-    public BlockResponse getLastNBlockResponseFromHeight(String height,Integer size);
+    public List<BlockResponse> getLastNBlockResponseFromHeight(Integer height,Integer size);
 }

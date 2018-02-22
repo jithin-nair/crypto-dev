@@ -11,15 +11,15 @@ package com.tychecash.tychexplore.model.request;
  */
 public class Params {
 
-    private String height;
+    private Integer height;
 
     private String hash;
 
-    public String getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 

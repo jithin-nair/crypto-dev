@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tychecash.tychexplore.model.response.BaseResponse;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
 
@@ -26,11 +25,11 @@ public class TycheRestController {
     private TycheExploreService tycheExploreService;
     
     @GetMapping("/getRecentBlocks")
-	public BaseResponse getRecentBlocks() {
+	public List<BlockResponse> getRecentBlocks() {
 		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
-		BaseResponse baseResponse = new BaseResponse();
-		baseResponse.setResponseBody(lastBlockResponse);
-		return baseResponse;
+		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+		List<BlockResponse> blockResponses = tycheExploreService.getLastNBlockResponseFromHeight(lastBlockHeight, 10);
+		return blockResponses;
 	}
     
 }

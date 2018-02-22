@@ -5,9 +5,15 @@
  */
 package com.tychecash.tychexplore.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import com.tychecash.tychexplore.model.request.BlockRequest;
+import com.tychecash.tychexplore.model.request.Params;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
 
@@ -32,18 +38,39 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 
 	@Override
 	public BlockResponse getLastBlockResponse() {
-		BlockResponse blockResponse = null;
 		BlockRequest blockRequest = new BlockRequest();
 		blockRequest.setId("self");
 		blockRequest.setJsonrpc("2.0");
 		blockRequest.setMethod("getlastblockheader");
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		String uri = "http://192.168.1.5:26000/json_rpc";
+		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+		System.out.println("Input : " + blockRequest.toString());
+		System.out.println("output : " + blockResponse.toString());
 		return blockResponse;
 	}
 
 	@Override
-	public BlockResponse getLastNBlockResponseFromHeight(String height, Integer size) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-																		// Tools | Templates.
+	public List<BlockResponse> getLastNBlockResponseFromHeight(Integer height, Integer size) {
+		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
+		String uri = "http://192.168.1.5:26000/json_rpc";
+		BlockRequest blockRequest = new BlockRequest();
+		blockRequest.setId("self");
+		blockRequest.setJsonrpc("2.0");
+		blockRequest.setMethod("getblockheaderbyheight");
+		Params params = new Params();
+		for (int i = 0; i < size; i++) {
+			params.setHeight(height - i);
+			blockRequest.setParams(params);
+			RestTemplate restTemplate = new RestTemplate();
+			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+			BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+			blockResponses.add(blockResponse);
+			System.out.println("Input : " + blockRequest.toString());
+			System.out.println("output : " + blockResponse.toString());
+		}
+		return blockResponses;
 	}
 
 }
