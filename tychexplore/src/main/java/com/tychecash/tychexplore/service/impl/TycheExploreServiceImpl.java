@@ -12,8 +12,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.tychecash.tychexplore.model.ResponseVO;
 import com.tychecash.tychexplore.model.request.BlockRequest;
 import com.tychecash.tychexplore.model.request.Params;
+import com.tychecash.tychexplore.model.response.BlockHeader;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
 
@@ -52,7 +54,8 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 	}
 
 	@Override
-	public List<BlockResponse> getLastNBlockResponseFromHeight(Integer height, Integer size) {
+	public ResponseVO getLastNBlockResponseFromHeight(Integer height,Integer pageNumber, Integer size) {
+		ResponseVO responseVO = new ResponseVO();
 		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
 		String uri = "http://192.168.1.5:26000/json_rpc";
 		BlockRequest blockRequest = new BlockRequest();
@@ -61,7 +64,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 		blockRequest.setMethod("getblockheaderbyheight");
 		Params params = new Params();
 		for (int i = 0; i < size; i++) {
-			params.setHeight(height - i);
+			params.setHeight((height - (size * pageNumber)) - i);
 			blockRequest.setParams(params);
 			RestTemplate restTemplate = new RestTemplate();
 			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -70,7 +73,17 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 			System.out.println("Input : " + blockRequest.toString());
 			System.out.println("output : " + blockResponse.toString());
 		}
-		return blockResponses;
+		List<BlockHeader> blockHeaders = new ArrayList<>();
+		for (BlockResponse blockResponse : blockResponses) {
+			if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
+				blockHeaders.add(blockResponse.getResult().getBlock_header());
+			}
+		}
+		responseVO.setId(blockRequest.getId());
+		responseVO.setJsonrpc(blockRequest.getJsonrpc());
+		responseVO.setBlockHeaders(blockHeaders);
+		responseVO.setStatus("SUCCESS");
+		return responseVO;
 	}
 
 }

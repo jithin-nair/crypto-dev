@@ -1,67 +1,80 @@
 $(document).ready(function() {
 
-	var url = "../sampledata/beverages.txt";
+	var url = "/tychexplore/getRecentBlocks";
 	// prepare the data
 	var source = {
 		datatype : "json",
 		datafields : [ {
-			name : 'name',
-			type : 'string'
+			name : 'height',
+			type : 'int',
+			map  : 'height'
 		}, {
-			name : 'type',
-			type : 'string'
+			name : 'hash',
+			type : 'string',
+			map  : 'hash'
 		}, {
-			name : 'calories',
-			type : 'int'
+			name : 'difficulty',
+			type : 'int',
+			map  : 'difficulty'
 		}, {
-			name : 'totalfat',
-			type : 'string'
+			name : 'reward',
+			type : 'string',
+			map  : 'reward'
 		}, {
-			name : 'protein',
-			type : 'string'
+			name : 'orphan_status',
+			type : 'string',
+			map  : 'orphan_status'
 		} ],
 		id : 'id',
-		url : url
+		url : url,
+		root: 'blockHeaders',
+		beforeprocessing: function (data) {
+            source.totalrecords = 1000;
+        }
 	};
 
 	var dataAdapter = new $.jqx.dataAdapter(source);
-
+	
 	$("#table").jqxDataTable({
-		width : getWidth("dataTable"),
+		width : "100%",
+		autoRowHeight: true,
+		theme: 'darkblue',
 		source : dataAdapter,
+		filterable: false,
 		pagerPosition : 'both',
 		pageable : true,
+		pagerMode: "advanced",
+		pageSizeOptions: ['10', '15', '20'],
+		pagerButtonsCount: 5,
+		serverProcessing: true,
 		altRows : true,
 		columns : [ {
-			text : 'Name',
-			dataField : 'firstname',
-			width : 200
-		}, {
-			text : 'Last Name',
-			dataField : 'lastname',
-			width : 200
-		}, {
-			text : 'Product',
+			text : 'Height',
 			editable : false,
-			dataField : 'productname',
-			width : 180
+			dataField : 'height',
+			width : '15%'
 		}, {
-			text : 'Quantity',
-			dataField : 'quantity',
-			width : 80,
+			text : 'Block Hash',
+			editable : false,
+			dataField : 'hash',
+			width : '45%'
+		}, {
+			text : 'difficulty',
+			editable : false,
+			dataField : 'difficulty',
+			width : '15%'
+		}, {
+			text : 'reward',
+			dataField : 'reward',
+			width : '15%',
 			cellsalign : 'right'
 		}, {
-			text : 'Unit Price',
-			dataField : 'price',
-			width : 80,
-			cellsalign : 'right',
-			cellsFormat : 'c2'
-		}, {
-			text : 'Total',
-			dataField : 'total',
-			cellsalign : 'right',
-			cellsFormat : 'c2'
+			text : 'orphan_status',
+			dataField : 'orphan_status',
+			cellsalign : 'center',
+			width : '10%'
 		} ]
 	});
+	
 
 });

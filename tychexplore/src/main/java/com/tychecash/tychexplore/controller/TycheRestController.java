@@ -5,12 +5,12 @@
  */
 package com.tychecash.tychexplore.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tychecash.tychexplore.model.ResponseVO;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
 
@@ -20,16 +20,17 @@ import com.tychecash.tychexplore.service.TycheExploreService;
  */
 @RestController
 public class TycheRestController {
-    
-    @Autowired
-    private TycheExploreService tycheExploreService;
-    
-    @GetMapping("/getRecentBlocks")
-	public List<BlockResponse> getRecentBlocks() {
+
+	@Autowired
+	private TycheExploreService tycheExploreService;
+
+	@GetMapping("/getRecentBlocks")
+	public ResponseVO getRecentBlocks(@RequestParam("filterslength") Integer filterslength,
+			@RequestParam("pagenum") Integer pagenum, @RequestParam("pagesize") Integer pagesize) {
 		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
 		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
-		List<BlockResponse> blockResponses = tycheExploreService.getLastNBlockResponseFromHeight(lastBlockHeight, 10);
-		return blockResponses;
+		ResponseVO responseVO = tycheExploreService.getLastNBlockResponseFromHeight(lastBlockHeight,pagenum, pagesize);
+		return responseVO;
 	}
-    
+
 }
