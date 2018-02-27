@@ -54,7 +54,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 	}
 
 	@Override
-	public ResponseVO getLastNBlockResponseFromHeight(Integer height,Integer pageNumber, Integer size) {
+	public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) {
 		ResponseVO responseVO = new ResponseVO();
 		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
 		String uri = "http://192.168.1.5:26000/json_rpc";
@@ -64,14 +64,17 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 		blockRequest.setMethod("getblockheaderbyheight");
 		Params params = new Params();
 		for (int i = 0; i < size; i++) {
-			params.setHeight((height - (size * pageNumber)) - i);
-			blockRequest.setParams(params);
-			RestTemplate restTemplate = new RestTemplate();
-			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-			BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-			blockResponses.add(blockResponse);
-			System.out.println("Input : " + blockRequest.toString());
-			System.out.println("output : " + blockResponse.toString());
+			Integer curHeight = (height - (size * pageNumber)) - i;
+			if (curHeight > -1) {
+				params.setHeight(curHeight);
+				blockRequest.setParams(params);
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+				BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+				blockResponses.add(blockResponse);
+				System.out.println("Input : " + blockRequest.toString());
+				System.out.println("output : " + blockResponse.toString());
+			}
 		}
 		List<BlockHeader> blockHeaders = new ArrayList<>();
 		for (BlockResponse blockResponse : blockResponses) {

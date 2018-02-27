@@ -7,46 +7,57 @@ $(document).ready(function() {
 		datafields : [ {
 			name : 'height',
 			type : 'int',
-			map  : 'height'
+			map : 'height'
 		}, {
 			name : 'hash',
 			type : 'string',
-			map  : 'hash'
+			map : 'hash'
 		}, {
 			name : 'difficulty',
 			type : 'int',
-			map  : 'difficulty'
+			map : 'difficulty'
 		}, {
 			name : 'reward',
 			type : 'string',
-			map  : 'reward'
+			map : 'reward'
 		}, {
 			name : 'orphan_status',
 			type : 'string',
-			map  : 'orphan_status'
+			map : 'orphan_status'
 		} ],
 		id : 'id',
 		url : url,
-		root: 'blockHeaders',
-		beforeprocessing: function (data) {
-            source.totalrecords = 1000;
-        }
+		root : 'blockHeaders',
+		beforeSend : function(data) {
+			$.ajax({
+				type : "GET",
+				contentType : "application/json",
+				url : "/tychexplore/getTotalPages",
+				dataType : 'json',
+				success : function(data) {
+					source.totalrecords = data;
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
 	};
 
 	var dataAdapter = new $.jqx.dataAdapter(source);
-	
+
 	$("#table").jqxDataTable({
 		width : "100%",
-		autoRowHeight: true,
-		theme: 'darkblue',
+		autoRowHeight : true,
+		theme : 'darkblue',
 		source : dataAdapter,
-		filterable: false,
+		filterable : false,
 		pagerPosition : 'both',
 		pageable : true,
-		pagerMode: "advanced",
-		pageSizeOptions: ['10', '15', '20'],
-		pagerButtonsCount: 5,
-		serverProcessing: true,
+		pagerMode : "advanced",
+		pageSizeOptions : [ '10', '15', '20' ],
+		pagerButtonsCount : 5,
+		serverProcessing : true,
 		altRows : true,
 		columns : [ {
 			text : 'Height',
@@ -75,6 +86,5 @@ $(document).ready(function() {
 			width : '10%'
 		} ]
 	});
-	
 
 });
