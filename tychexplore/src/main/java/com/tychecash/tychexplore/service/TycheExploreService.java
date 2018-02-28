@@ -13,11 +13,15 @@ import com.tychecash.tychexplore.model.response.BlockResponse;
  * @author jithin
  */
 public interface TycheExploreService {
-	public BlockResponse getBlockResponseByHeight(String height);
+	public BlockResponse getBlockResponseByHeight(Integer height);
 
 	public BlockResponse getBlockResponseByHash(String hash);
 
+        public BlockResponse getFirstBlockResponse();
+        
 	public BlockResponse getLastBlockResponse();
 
 	public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size);
+        
+        public ResponseVO getBlockSamples(Integer samplingRate);
 }

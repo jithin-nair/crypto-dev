@@ -2,11 +2,11 @@ package com.tychecash.tychexplore.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class TycheWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { TycheConfiguration.class };
+		return new Class[] { TycheWebConfiguration.class };
 	}
 
 	@Override

@@ -5,6 +5,7 @@
  */
 package com.tychecash.tychexplore.service.impl;
 
+import com.tychecash.tychexplore.config.TycheExploreConfig;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.tychecash.tychexplore.model.request.Params;
 import com.tychecash.tychexplore.model.response.BlockHeader;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -25,10 +27,26 @@ import com.tychecash.tychexplore.service.TycheExploreService;
  */
 @Component
 public class TycheExploreServiceImpl implements TycheExploreService {
+    
+        @Autowired
+        TycheExploreConfig tycheExploreConfig;
 
 	@Override
-	public BlockResponse getBlockResponseByHeight(String height) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+	public BlockResponse getBlockResponseByHeight(Integer height) {
+		BlockRequest blockRequest = new BlockRequest();
+		blockRequest.setId("self");
+		blockRequest.setJsonrpc("2.0");
+		blockRequest.setMethod("getblockheaderbyheight");
+                Params params = new Params();
+                params.setHeight(height);
+                blockRequest.setParams(params);
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		String uri = tycheExploreConfig.getRpcServerUrl();
+		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+		System.out.println("Input : " + blockRequest.toString());
+		System.out.println("output : " + blockResponse.toString());
+		return blockResponse;
 																		// Tools | Templates.
 	}
 
@@ -38,6 +56,11 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 																		// Tools | Templates.
 	}
 
+        @Override
+        public BlockResponse getFirstBlockResponse() {
+            return getBlockResponseByHeight(0);
+        }
+    
 	@Override
 	public BlockResponse getLastBlockResponse() {
 		BlockRequest blockRequest = new BlockRequest();
@@ -46,7 +69,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 		blockRequest.setMethod("getlastblockheader");
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		String uri = "http://192.168.1.5:26000/json_rpc";
+		String uri = tycheExploreConfig.getRpcServerUrl();
 		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
 		System.out.println("Input : " + blockRequest.toString());
 		System.out.println("output : " + blockResponse.toString());
@@ -57,7 +80,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 	public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) {
 		ResponseVO responseVO = new ResponseVO();
 		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
-		String uri = "http://192.168.1.5:26000/json_rpc";
+		String uri = tycheExploreConfig.getRpcServerUrl();
 		BlockRequest blockRequest = new BlockRequest();
 		blockRequest.setId("self");
 		blockRequest.setJsonrpc("2.0");
@@ -88,5 +111,11 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 		responseVO.setStatus("SUCCESS");
 		return responseVO;
 	}
+
+    @Override
+    public ResponseVO getBlockSamples(Integer samplingRate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }

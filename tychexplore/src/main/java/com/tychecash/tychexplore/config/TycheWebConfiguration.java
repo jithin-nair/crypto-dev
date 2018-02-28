@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.tychecash.tychexplore" })
-public class TycheConfiguration extends WebMvcConfigurerAdapter {
+public class TycheWebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public ViewResolver viewResolver() {

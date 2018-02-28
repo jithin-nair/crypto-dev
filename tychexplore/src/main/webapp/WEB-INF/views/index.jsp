@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>TychExplore : Tyche Cache Block Explorer</title>
+<title>TychExplore : TycheCash Block Explorer</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -34,6 +34,8 @@
 <script type="text/javascript"
 	src="resources/jqwidgets/jqxradiobutton.js"></script>
 <script type="text/javascript" src="resources/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="resources/jqwidgets/jqxchart.core.js"></script>
+ <script type="text/javascript" src="resources/jqwidgets/jqxdraw.js"></script>
 
 <script src="resources/js/common.js"></script>
 
@@ -83,6 +85,7 @@
 	</div>
 	<!-- END WRAPPER -->
 	<div class="container">
+                 <div id='chartContainer' style="width:850px; height:500px">
 		<div id="table"></div>
 	</div>
 
