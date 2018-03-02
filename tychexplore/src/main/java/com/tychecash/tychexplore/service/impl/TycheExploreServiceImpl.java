@@ -114,7 +114,38 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 
     @Override
     public ResponseVO getBlockSamples(Integer samplingRate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ResponseVO responseVO = new ResponseVO();
+		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
+		String uri = tycheExploreConfig.getRpcServerUrl();
+		BlockRequest blockRequest = new BlockRequest();
+		blockRequest.setId("self");
+		blockRequest.setJsonrpc("2.0");
+		blockRequest.setMethod("getblockheaderbyheight");
+		Params params = new Params();
+		for (int i = 0; i < samplingRate; i++) {
+			Integer curHeight = samplingRate;
+			if (curHeight > -1) {
+				params.setHeight(curHeight);
+				blockRequest.setParams(params);
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+				BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+				blockResponses.add(blockResponse);
+				System.out.println("Input : " + blockRequest.toString());
+				System.out.println("output : " + blockResponse.toString());
+			}
+		}
+		List<BlockHeader> blockHeaders = new ArrayList<>();
+		for (BlockResponse blockResponse : blockResponses) {
+			if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
+				blockHeaders.add(blockResponse.getResult().getBlock_header());
+			}
+		}
+		responseVO.setId(blockRequest.getId());
+		responseVO.setJsonrpc(blockRequest.getJsonrpc());
+		responseVO.setBlockHeaders(blockHeaders);
+		responseVO.setStatus("SUCCESS");
+		return responseVO;
     }
 
 

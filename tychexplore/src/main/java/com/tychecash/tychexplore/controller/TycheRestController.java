@@ -26,6 +26,14 @@ public class TycheRestController {
 	@Autowired
 	private TycheExploreService tycheExploreService;
 
+        @GetMapping("/getGraphData")
+	public ResponseVO getGraphData() {
+		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
+		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+		ResponseVO responseVO = tycheExploreService.getBlockSamples(lastBlockHeight);
+		return responseVO;
+	}
+        
 	@GetMapping("/getRecentBlocks")
 	public ResponseVO getRecentBlocks(@RequestParam("filterslength") Integer filterslength,
 			@RequestParam("pagenum") Integer pagenum, @RequestParam("pagesize") Integer pagesize) {
