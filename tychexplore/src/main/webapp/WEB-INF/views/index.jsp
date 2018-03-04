@@ -38,6 +38,7 @@
         <script type="text/javascript" src="resources/jqwidgets/jqxdraw.js"></script>
 
         <script src="resources/js/common.js"></script>
+        <script src="resources/js/main.js"></script>
 
         <!-- VENDOR CSS -->
         <link rel="stylesheet" href="resources/styles/bootstrap.min.css">
@@ -69,13 +70,13 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <form class="navbar-form navbar-left" action="/action_page.php">
+                            <div class="navbar-form navbar-left">
                                 <div class="form-group">
-                                    <input class="form-control mr-sm-2" type="text"
+                                    <input class="form-control mr-sm-2" type="text" name="query" id="query"
                                            placeholder="Search by block hash/height" style="width: 600px;">
                                 </div>
-                                <button class="btn btn-success" type="submit">Search</button>
-                            </form>
+                                <button class="btn btn-success" id="search" name="search" type="button">Search</button>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -85,8 +86,51 @@
         </div>
         <!-- END WRAPPER -->
         <div class="container">
-            <div id='chartContainer' style="width:100%; height:500px"></div>
-            <div id="table"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary" style="height:300px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Block Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered" style="width:100%">
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Height</th>
+                                    <td style="color: #2d5768;"><b><span id="bHeight">55577855</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Hash</th>
+                                    <td style="color: #2d5768;"><b><span id="bHash">asdadad3rrsfsfdf4334t3345353rwefwrwrwer</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Found</th>
+                                    <td style="color: #2d5768;"><b><span id="bFound">22/2/2018 11:12:15</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Difficulty</th>
+                                    <td style="color: #2d5768;"><b><span id="bDifficulty">55577855</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Reward</th>
+                                    <td style="color: #2d5768;"><b><span id="bReward">555778.55</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%;color: #336a80;">Block Status</th>
+                                    <td style="color: #2d5768;"><b><span id="bStatus">Not Orphan</span></b></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id='chartContainer' style="height:300px;width:100%;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="table"></div>
+                </div>
+            </div>
         </div>
 
     </body>

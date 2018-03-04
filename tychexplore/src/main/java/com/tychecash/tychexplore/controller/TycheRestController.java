@@ -23,32 +23,47 @@ import com.tychecash.tychexplore.service.TycheExploreService;
 @RestController
 public class TycheRestController {
 
-	@Autowired
-	private TycheExploreService tycheExploreService;
+    @Autowired
+    private TycheExploreService tycheExploreService;
 
-        @GetMapping("/getGraphData")
-	public ResponseVO getGraphData() {
-		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
-		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
-		ResponseVO responseVO = tycheExploreService.getBlockSamples(lastBlockHeight);
-		return responseVO;
-	}
-        
-	@GetMapping("/getRecentBlocks")
-	public ResponseVO getRecentBlocks(@RequestParam("filterslength") Integer filterslength,
-			@RequestParam("pagenum") Integer pagenum, @RequestParam("pagesize") Integer pagesize) {
-		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
-		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
-		ResponseVO responseVO = tycheExploreService.getLastNBlockResponseFromHeight(lastBlockHeight,pagenum, pagesize);
-		return responseVO;
-	}
+    @ResponseBody
+    @RequestMapping(value = "/getGraphData")
+    public ResponseVO getGraphData() {
+        BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
+        Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+        ResponseVO responseVO = tycheExploreService.getBlockSamples(lastBlockHeight);
+        return responseVO;
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/getTotalPages")
-	public Integer getTotalPages() {
-		BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
-		Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
-		return lastBlockHeight;
+    @ResponseBody
+    @RequestMapping(value = "/getBlockBySearch")
+    public BlockResponse getBlockBySearch(@RequestParam("query") String query) {
+        try {
+            Integer height = Integer.parseInt(query);
+            BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(height);
+            return blockResponse;
+        } catch (NumberFormatException exception) {
+            BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(query);
+            return blockResponse;
+        }
+    }
 
-	}
+    @ResponseBody
+    @RequestMapping(value = "/getRecentBlocks")
+    public ResponseVO getRecentBlocks(@RequestParam("filterslength") Integer filterslength,
+            @RequestParam("pagenum") Integer pagenum, @RequestParam("pagesize") Integer pagesize) {
+        BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
+        Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+        ResponseVO responseVO = tycheExploreService.getLastNBlockResponseFromHeight(lastBlockHeight, pagenum, pagesize);
+        return responseVO;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTotalPages")
+    public Integer getTotalPages() {
+        BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
+        Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+        return lastBlockHeight;
+
+    }
 }

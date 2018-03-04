@@ -1,68 +1,5 @@
 $(document).ready(function () {
-
-    // prepare the data
-    var source =
-            {
-                datatype: "json",
-                datafields: [{
-                        name: 'height',
-                        type: 'int',
-                        map: 'height'
-                    }, {
-                        name: 'difficulty',
-                        type: 'int',
-                        map: 'difficulty'
-                    }],
-                id: 'id1',
-                root: 'blockHeaders',
-                url: '/tychexplore/getGraphData'
-            };
-    var dataAdapt = new $.jqx.dataAdapter(source, {async: true, autoBind: true, loadError: function (xhr, status, error) {
-            alert('Error loading "' + source.url + '" : ' + error);
-        }});
-
-    // prepare jqxChart settings
-    var settings = {
-        title: "Difficulty Graph",
-        description: "Difficulty vs Height",
-        enableAnimations: true,
-        showLegend: true,
-        padding: {left: 15, top: 5, right: 20, bottom: 5},
-        titlePadding: {left: 10, top: 0, right: 0, bottom: 10},
-        source: dataAdapt,
-        xAxis:
-                {
-                    dataField: 'height',
-                    minValue: 0,
-                    maxValue: 3,
-                    unitInterval: 1,
-                    valuesOnTicks: true
-                },
-        colorScheme: 'scheme05',
-        seriesGroups:
-                [
-                    {
-                        alignEndPointsWithIntervals: false,
-                        type: 'splinearea',
-                        valueAxis:
-                                {
-                                    visible: true,
-                                    unitInterval: 10,
-                                    title: {text: 'Index Value'},
-                                    labels: {
-                                        horizontalAlignment: 'right',
-                                        formatSettings: {decimalPlaces: 0}
-                                    }
-                                },
-                        series: [
-                            {dataField: 'difficulty', displayText: 'difficulty', opacity: 0.7}
-                        ]
-                    }
-                ]
-    };
-    // setup the chart
-    $('#chartContainer').jqxChart(settings);
-
+    
     var url = "/tychexplore/getRecentBlocks";
     // prepare the data
     var source = {
@@ -95,7 +32,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: "/tychexplore/getTotalPages",
+                url: "/tychexplore/getTotalPages?_=" + new Date().getTime(),
                 dataType: 'json',
                 success: function (data) {
                     source.totalrecords = data;
@@ -149,5 +86,5 @@ $(document).ready(function () {
                 width: '10%'
             }]
     });
-
+    
 });

@@ -52,8 +52,21 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 
 	@Override
 	public BlockResponse getBlockResponseByHash(String hash) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-																		// Tools | Templates.
+		BlockRequest blockRequest = new BlockRequest();
+		blockRequest.setId("self");
+		blockRequest.setJsonrpc("2.0");
+		blockRequest.setMethod("getblockheaderbyhash");
+                Params params = new Params();
+                params.setHash(hash);
+                blockRequest.setParams(params);
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		String uri = tycheExploreConfig.getRpcServerUrl();
+		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+		System.out.println("Input : " + blockRequest.toString());
+		System.out.println("output : " + blockResponse.toString());
+		return blockResponse;
+		
 	}
 
         @Override
@@ -123,7 +136,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 		blockRequest.setMethod("getblockheaderbyheight");
 		Params params = new Params();
 		for (int i = 0; i < samplingRate; i++) {
-			Integer curHeight = samplingRate;
+			Integer curHeight = i;
 			if (curHeight > -1) {
 				params.setHeight(curHeight);
 				blockRequest.setParams(params);
