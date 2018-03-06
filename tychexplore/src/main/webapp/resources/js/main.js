@@ -63,10 +63,7 @@ $(document).ready(function () {
                     }],
                 id: 'id',
                 url: url,
-                root: 'blockHeaders',
-                beforeSend: function (data) {
-                    source.totalrecords = totalPages
-                }
+                root: 'blockHeaders'
             };
 
             var dataAdapter = new $.jqx.dataAdapter(source);
@@ -83,9 +80,6 @@ $(document).ready(function () {
                 xAxis:
                         {
                             dataField: 'height',
-                            minValue: 0,
-                            maxValue: 29,
-                            unitInterval: 1,
                             valuesOnTicks: true
                         },
                 colorScheme: 'scheme02',
@@ -97,9 +91,7 @@ $(document).ready(function () {
                                 valueAxis:
                                         {
                                             visible: true,
-                                            unitInterval: 10000,
-                                            minValue: 1,
-                                            maxValue: 100000,
+                                            
                                             title: {text: 'Index Value'},
                                             labels: {
                                                 horizontalAlignment: 'right',

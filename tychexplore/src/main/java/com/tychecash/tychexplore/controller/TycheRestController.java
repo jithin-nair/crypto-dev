@@ -29,9 +29,7 @@ public class TycheRestController {
     @ResponseBody
     @RequestMapping(value = "/getGraphData")
     public ResponseVO getGraphData() {
-        BlockResponse lastBlockResponse = tycheExploreService.getLastBlockResponse();
-        Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
-        ResponseVO responseVO = tycheExploreService.getBlockSamples(lastBlockHeight);
+        ResponseVO responseVO = tycheExploreService.getBlockSamples(30);
         return responseVO;
     }
 

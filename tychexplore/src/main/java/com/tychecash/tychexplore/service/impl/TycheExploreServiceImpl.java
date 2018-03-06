@@ -19,6 +19,7 @@ import com.tychecash.tychexplore.model.request.Params;
 import com.tychecash.tychexplore.model.response.BlockHeader;
 import com.tychecash.tychexplore.model.response.BlockResponse;
 import com.tychecash.tychexplore.service.TycheExploreService;
+import com.tychecash.tychexplore.util.BlockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,139 +28,140 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Component
 public class TycheExploreServiceImpl implements TycheExploreService {
-    
-        @Autowired
-        TycheExploreConfig tycheExploreConfig;
 
-	@Override
-	public BlockResponse getBlockResponseByHeight(Integer height) {
-		BlockRequest blockRequest = new BlockRequest();
-		blockRequest.setId("self");
-		blockRequest.setJsonrpc("2.0");
-		blockRequest.setMethod("getblockheaderbyheight");
-                Params params = new Params();
-                params.setHeight(height);
+    @Autowired
+    TycheExploreConfig tycheExploreConfig;
+
+    @Override
+    public BlockResponse getBlockResponseByHeight(Integer height) {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getblockheaderbyheight");
+        Params params = new Params();
+        params.setHeight(height);
+        blockRequest.setParams(params);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        System.out.println("Input : " + blockRequest.toString());
+        System.out.println("output : " + blockResponse.toString());
+        return blockResponse;
+        // Tools | Templates.
+    }
+
+    @Override
+    public BlockResponse getBlockResponseByHash(String hash) {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getblockheaderbyhash");
+        Params params = new Params();
+        params.setHash(hash);
+        blockRequest.setParams(params);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        System.out.println("Input : " + blockRequest.toString());
+        System.out.println("output : " + blockResponse.toString());
+        return blockResponse;
+
+    }
+
+    @Override
+    public BlockResponse getFirstBlockResponse() {
+        return getBlockResponseByHeight(0);
+    }
+
+    @Override
+    public BlockResponse getLastBlockResponse() {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getlastblockheader");
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        System.out.println("Input : " + blockRequest.toString());
+        System.out.println("output : " + blockResponse.toString());
+        return blockResponse;
+    }
+
+    @Override
+    public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) {
+        ResponseVO responseVO = new ResponseVO();
+        List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getblockheaderbyheight");
+        Params params = new Params();
+        for (int i = 0; i < size; i++) {
+            Integer curHeight = (height - (size * pageNumber)) - i;
+            if (curHeight > -1) {
+                params.setHeight(curHeight);
                 blockRequest.setParams(params);
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		String uri = tycheExploreConfig.getRpcServerUrl();
-		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-		System.out.println("Input : " + blockRequest.toString());
-		System.out.println("output : " + blockResponse.toString());
-		return blockResponse;
-																		// Tools | Templates.
-	}
-
-	@Override
-	public BlockResponse getBlockResponseByHash(String hash) {
-		BlockRequest blockRequest = new BlockRequest();
-		blockRequest.setId("self");
-		blockRequest.setJsonrpc("2.0");
-		blockRequest.setMethod("getblockheaderbyhash");
-                Params params = new Params();
-                params.setHash(hash);
-                blockRequest.setParams(params);
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		String uri = tycheExploreConfig.getRpcServerUrl();
-		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-		System.out.println("Input : " + blockRequest.toString());
-		System.out.println("output : " + blockResponse.toString());
-		return blockResponse;
-		
-	}
-
-        @Override
-        public BlockResponse getFirstBlockResponse() {
-            return getBlockResponseByHeight(0);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+                blockResponses.add(blockResponse);
+                System.out.println("Input : " + blockRequest.toString());
+                System.out.println("output : " + blockResponse.toString());
+            }
         }
-    
-	@Override
-	public BlockResponse getLastBlockResponse() {
-		BlockRequest blockRequest = new BlockRequest();
-		blockRequest.setId("self");
-		blockRequest.setJsonrpc("2.0");
-		blockRequest.setMethod("getlastblockheader");
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		String uri = tycheExploreConfig.getRpcServerUrl();
-		BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-		System.out.println("Input : " + blockRequest.toString());
-		System.out.println("output : " + blockResponse.toString());
-		return blockResponse;
-	}
-
-	@Override
-	public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) {
-		ResponseVO responseVO = new ResponseVO();
-		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
-		String uri = tycheExploreConfig.getRpcServerUrl();
-		BlockRequest blockRequest = new BlockRequest();
-		blockRequest.setId("self");
-		blockRequest.setJsonrpc("2.0");
-		blockRequest.setMethod("getblockheaderbyheight");
-		Params params = new Params();
-		for (int i = 0; i < size; i++) {
-			Integer curHeight = (height - (size * pageNumber)) - i;
-			if (curHeight > -1) {
-				params.setHeight(curHeight);
-				blockRequest.setParams(params);
-				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-				BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-				blockResponses.add(blockResponse);
-				System.out.println("Input : " + blockRequest.toString());
-				System.out.println("output : " + blockResponse.toString());
-			}
-		}
-		List<BlockHeader> blockHeaders = new ArrayList<>();
-		for (BlockResponse blockResponse : blockResponses) {
-			if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
-				blockHeaders.add(blockResponse.getResult().getBlock_header());
-			}
-		}
-		responseVO.setId(blockRequest.getId());
-		responseVO.setJsonrpc(blockRequest.getJsonrpc());
-		responseVO.setBlockHeaders(blockHeaders);
-		responseVO.setStatus("SUCCESS");
-		return responseVO;
-	}
+        List<BlockHeader> blockHeaders = new ArrayList<>();
+        for (BlockResponse blockResponse : blockResponses) {
+            if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
+                blockHeaders.add(blockResponse.getResult().getBlock_header());
+            }
+        }
+        responseVO.setId(blockRequest.getId());
+        responseVO.setJsonrpc(blockRequest.getJsonrpc());
+        responseVO.setBlockHeaders(blockHeaders);
+        responseVO.setStatus("SUCCESS");
+        return responseVO;
+    }
 
     @Override
     public ResponseVO getBlockSamples(Integer samplingRate) {
         ResponseVO responseVO = new ResponseVO();
-		List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
-		String uri = tycheExploreConfig.getRpcServerUrl();
-		BlockRequest blockRequest = new BlockRequest();
-		blockRequest.setId("self");
-		blockRequest.setJsonrpc("2.0");
-		blockRequest.setMethod("getblockheaderbyheight");
-		Params params = new Params();
-		for (int i = 0; i < samplingRate; i++) {
-			Integer curHeight = i;
-			if (curHeight > -1) {
-				params.setHeight(curHeight);
-				blockRequest.setParams(params);
-				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-				BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-				blockResponses.add(blockResponse);
-				System.out.println("Input : " + blockRequest.toString());
-				System.out.println("output : " + blockResponse.toString());
-			}
-		}
-		List<BlockHeader> blockHeaders = new ArrayList<>();
-		for (BlockResponse blockResponse : blockResponses) {
-			if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
-				blockHeaders.add(blockResponse.getResult().getBlock_header());
-			}
-		}
-		responseVO.setId(blockRequest.getId());
-		responseVO.setJsonrpc(blockRequest.getJsonrpc());
-		responseVO.setBlockHeaders(blockHeaders);
-		responseVO.setStatus("SUCCESS");
-		return responseVO;
+        BlockResponse lastBlockResponse = getLastBlockResponse();
+        Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
+        List<Integer> blockSamples = BlockUtil.getAllBlockSamples(samplingRate, lastBlockHeight);
+        List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getblockheaderbyheight");
+        Params params = new Params();
+        for (Integer blockHeight : blockSamples) {
+            if (blockHeight > 0) {
+                params.setHeight(blockHeight);
+                blockRequest.setParams(params);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+                blockResponses.add(blockResponse);
+                System.out.println("Input : " + blockRequest.toString());
+                System.out.println("output : " + blockResponse.toString());
+            }
+        }
+        List<BlockHeader> blockHeaders = new ArrayList<>();
+        for (BlockResponse blockResponse : blockResponses) {
+            if (blockResponse.getResult().getStatus().equalsIgnoreCase("OK")) {
+                blockHeaders.add(blockResponse.getResult().getBlock_header());
+            }
+        }
+        responseVO.setId(blockRequest.getId());
+        responseVO.setJsonrpc(blockRequest.getJsonrpc());
+        responseVO.setBlockHeaders(blockHeaders);
+        responseVO.setStatus("SUCCESS");
+        return responseVO;
     }
-
 
 }
