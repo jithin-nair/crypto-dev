@@ -25,8 +25,8 @@ $(document).ready(function () {
                 success: function (data) {
                     var json = data;
                     $("#bHeight").text(json.result.block_header.height);
-                    $("#bHash").text(json.result.block_header.hash.substring(0, 30) + "...");
-                    $("#bFound").text(new Date(json.result.block_header.timestamp * 1000));
+                    $("#bHash").text(json.result.block_header.hash);
+                    $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
                     $("#bStatus").text(json.result.block_header.orphan_status);
@@ -121,8 +121,8 @@ $(document).ready(function () {
             success: function (data) {
                 var json = data;
                 $("#bHeight").text(json.result.block_header.height);
-                $("#bHash").text(json.result.block_header.hash.substring(0, 30) + "...");
-                $("#bFound").text(new Date(json.result.block_header.timestamp * 1000));
+                $("#bHash").text(json.result.block_header.hash);
+                $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                 $("#bDifficulty").text(json.result.block_header.difficulty);
                 $("#bReward").text(json.result.block_header.reward);
                 $("#bStatus").text(json.result.block_header.orphan_status);

@@ -96,27 +96,27 @@
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Height</th>
-                                    <td style="color: #2d5768;"><b><span id="bHeight">55577855</span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bHeight"></span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Hash</th>
-                                    <td style="color: #2d5768;"><b><span id="bHash">asdadad3rrsfsfdf4334t3345353rwefwrwrwer</span></b></td>
+                                    <td style="color: #2d5768;word-break: break-all;"><b><span id="bHash"></span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Found</th>
-                                    <td style="color: #2d5768;"><b><span id="bFound">22/2/2018 11:12:15</span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bFound"></span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Difficulty</th>
-                                    <td style="color: #2d5768;"><b><span id="bDifficulty">55577855</span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bDifficulty"></span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Reward</th>
-                                    <td style="color: #2d5768;"><b><span id="bReward">555778.55</span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 25%;color: #336a80;">Block Status</th>
-                                    <td style="color: #2d5768;"><b><span id="bStatus">Not Orphan</span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bStatus"></span></b></td>
                                 </tr>
                             </table>
                         </div>
