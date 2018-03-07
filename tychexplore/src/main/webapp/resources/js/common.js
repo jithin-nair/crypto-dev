@@ -43,7 +43,7 @@ $(document).ready(function () {
             });
         }
     };
-
+    
     var dataAdapter = new $.jqx.dataAdapter(source);
 
     $("#table").jqxDataTable({
@@ -78,7 +78,7 @@ $(document).ready(function () {
                 text: 'reward',
                 dataField: 'reward',
                 width: '15%',
-                cellsalign: 'right'
+                cellsalign: 'left'
             }, {
                 text: 'orphan_status',
                 dataField: 'orphan_status',
