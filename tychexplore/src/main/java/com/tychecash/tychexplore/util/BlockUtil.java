@@ -24,4 +24,8 @@ public class BlockUtil {
         }
         return blockSamples;
     }
+
+    public static String insertCharAt(String st, char ch, int index) throws NullPointerException, IndexOutOfBoundsException {
+        return st.substring(0, index) + ch + st.substring(index, st.length());
+    }
 }

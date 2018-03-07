@@ -119,11 +119,18 @@
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Reward</th>
-                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b>
+                                        &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Status</th>
                                     <td style="color: #2d5768;"><b><span id="bStatus"></span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 30%;color: #336a80;">Previous</th>
+                                    <td style="color: #2d5768;word-break: break-all;">
+                                        <b><span id="bPrevious" class="label label-danger"></span></b>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -137,6 +144,15 @@
                 <div class="col-md-12">
                     <div id="table"></div>
                 </div>
+            </div>
+        </div>
+        
+        <div class="footer navbar-fixed-bottom bg-info">
+            <div class="container-fluid pull-left">
+                  © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+            </div>
+            <div class="container-fluid pull-right">
+                Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
             </div>
         </div>
 

@@ -70,20 +70,28 @@ $(document).ready(function () {
                 dataField: 'hash',
                 width: '45%'
             }, {
-                text: 'difficulty',
+                text: 'Difficulty',
                 editable: false,
                 dataField: 'difficulty',
                 width: '15%'
             }, {
-                text: 'reward',
+                text: 'Reward',
                 dataField: 'reward',
                 width: '15%',
                 cellsalign: 'left'
             }, {
-                text: 'orphan_status',
+                text: 'Orphan Status',
                 dataField: 'orphan_status',
                 cellsalign: 'center',
-                width: '10%'
+                width: '10%',
+                cellsrenderer: function (row, column, value) {
+                    if(value===true){
+                        return "Orphaned";
+                    }
+                    else{
+                        return "Not Orphaned";
+                    }
+                }
             }]
     });
     
