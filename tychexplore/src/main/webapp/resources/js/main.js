@@ -29,7 +29,8 @@ $(document).ready(function () {
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
-                    $("#bStatus").text(json.result.block_header.orphan_status);
+                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
+                    $("#bPrevious").text(json.result.block_header.prev_hash);
                 },
                 error: function (e) {
                     console.log("ERROR: ", e);
@@ -91,7 +92,6 @@ $(document).ready(function () {
                                 valueAxis:
                                         {
                                             visible: true,
-                                            
                                             title: {text: 'Index Value'},
                                             labels: {
                                                 horizontalAlignment: 'right',
@@ -120,12 +120,21 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 var json = data;
-                $("#bHeight").text(json.result.block_header.height);
-                $("#bHash").text(json.result.block_header.hash);
-                $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
-                $("#bDifficulty").text(json.result.block_header.difficulty);
-                $("#bReward").text(json.result.block_header.reward);
-                $("#bStatus").text(json.result.block_header.orphan_status);
+                if (json.result == null) {
+                    $("#bWarning").text("No Result Found");
+                    window.setTimeout(function () {
+                        $("#bWarning").text("");
+                    }, 3000);
+                } else {
+                    $("#bHeight").text(json.result.block_header.height);
+                    $("#bHash").text(json.result.block_header.hash);
+                    $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
+                    $("#bDifficulty").text(json.result.block_header.difficulty);
+                    $("#bReward").text(json.result.block_header.reward);
+                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
+                    $("#bPrevious").text(json.result.block_header.prev_hash);
+                    $("#bSearchLabel").text("Search Result");
+                }
             },
             error: function (e) {
                 console.log("ERROR: ", e);

@@ -5,6 +5,8 @@
  */
 package com.tychecash.tychexplore.model.response;
 
+import com.tychecash.tychexplore.util.BlockUtil;
+
 /**
  *
  * @author jithin
@@ -70,7 +72,7 @@ public class BlockHeader {
     }
 
     public void setReward(String reward) {
-        this.reward = reward;
+        this.reward = BlockUtil.insertCharAt(reward, '.', 6);
     }
 
     public String getNonce() {

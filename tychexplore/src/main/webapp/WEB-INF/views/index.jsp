@@ -50,13 +50,19 @@
               type="text/css" />
         <link rel="stylesheet"
               href="resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+
+        <style type="text/css">
+            .custom-link-color{
+                color:whitesmoke;
+            }
+        </style>
     </head>
     <body>
 
         <!-- WRAPPER -->
         <div id="wrapper">
 
-            <nav class="navbar" style="background-color: #2FA4E7;">
+            <nav class="navbar navbar-fixed-top bg-primary" >
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/tychexplore"> <img
@@ -64,14 +70,15 @@
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Pools</a></li>
-                        <li><a href="#">API</a></li>
+                        <li><a href="#" class="custom-link-color">Home</a></li>
+                        <li><a href="#" class="custom-link-color">Pools</a></li>
+                        <li><a href="#" class="custom-link-color">API</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <div class="navbar-form navbar-left">
                                 <div class="form-group">
+                                    <span class="label label-warning" id="bWarning"></span>
                                     <input class="form-control mr-sm-2" type="text" name="query" id="query"
                                            placeholder="Search by block hash/height" style="width: 600px;">
                                 </div>
@@ -85,38 +92,45 @@
 
         </div>
         <!-- END WRAPPER -->
-        <div class="container">
+        <div class="container" style="margin-top:60px">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Block Details</h3>
-                        </div>
                         <div class="panel-body">
+                            <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Height</th>
+                                    <th style="width: 30%;color: #336a80;">Height</th>
                                     <td style="color: #2d5768;"><b><span id="bHeight"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Hash</th>
-                                    <td style="color: #2d5768;word-break: break-all;"><b><span id="bHash"></span></b></td>
+                                    <th style="width: 30%;color: #336a80;">Hash</th>
+                                    <td style="color: #2d5768;word-break: break-all;">
+                                        <b><span id="bHash" class="label label-success"></span></b>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Found</th>
+                                    <th style="width: 30%;color: #336a80;">Found</th>
                                     <td style="color: #2d5768;"><b><span id="bFound"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Difficulty</th>
+                                    <th style="width: 30%;color: #336a80;">Difficulty</th>
                                     <td style="color: #2d5768;"><b><span id="bDifficulty"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Reward</th>
-                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b></td>
+                                    <th style="width: 30%;color: #336a80;">Reward</th>
+                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b>
+                                        &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%;color: #336a80;">Block Status</th>
+                                    <th style="width: 30%;color: #336a80;">Status</th>
                                     <td style="color: #2d5768;"><b><span id="bStatus"></span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 30%;color: #336a80;">Previous</th>
+                                    <td style="color: #2d5768;word-break: break-all;">
+                                        <b><span id="bPrevious" class="label label-danger"></span></b>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -130,6 +144,15 @@
                 <div class="col-md-12">
                     <div id="table"></div>
                 </div>
+            </div>
+        </div>
+        
+        <div class="footer navbar-fixed-bottom bg-info">
+            <div class="container-fluid pull-left">
+                  © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+            </div>
+            <div class="container-fluid pull-right">
+                Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
             </div>
         </div>
 
