@@ -1,12 +1,13 @@
 <%-- 
-    Document   : index
-    Created on : 15 Feb, 2018, 9:16:57 PM
-    Author     : jithin
+    Document   : search
+    Created on : 8 Mar, 2018, 9:13:15 PM
+    Author     : Jithin
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,39 +18,39 @@
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <!-- add the jQuery script -->
         <script type="text/javascript"
-        src="resources/scripts/jquery-1.11.1.min.js"></script>
+        src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
         <!-- add the bootstrap script -->
-        <script src="resources/scripts/bootstrap.min.js"></script>
+        <script src="${contextPath}/resources/scripts/bootstrap.min.js"></script>
         <!-- add the jQWidgets framework -->
-        <script type="text/javascript" src="resources/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxcore.js"></script>
         <!-- add one or more widgets -->
-        <script type="text/javascript" src="resources/jqwidgets/jqxdata.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxbuttons.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxscrollbar.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdata.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxlistbox.js"></script>
         <script type="text/javascript"
-        src="resources/jqwidgets/jqxdropdownlist.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxdatatable.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxpanel.js"></script>
+        src="${contextPath}/resources/jqwidgets/jqxdropdownlist.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdatatable.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxpanel.js"></script>
         <script type="text/javascript"
-        src="resources/jqwidgets/jqxradiobutton.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxinput.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxchart.core.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxdraw.js"></script>
+        src="${contextPath}/resources/jqwidgets/jqxradiobutton.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxinput.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxchart.core.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdraw.js"></script>
 
-        <script src="resources/js/common.js"></script>
-        <script src="resources/js/main.js"></script>
+        <script src="${contextPath}/resources/js/common.js"></script>
+
 
         <!-- VENDOR CSS -->
-        <link rel="stylesheet" href="resources/styles/bootstrap.min.css">
+        <link rel="stylesheet" href="${contextPath}/resources/styles/bootstrap.min.css">
         <link rel="stylesheet"
-              href="resources/font-awesome/css/font-awesome.min.css">
+              href="${contextPath}/resources/font-awesome/css/font-awesome.min.css">
 
         <!-- add the jQWidgets base styles and one of the theme stylesheets -->
-        <link rel="stylesheet" href="resources/jqwidgets/styles/jqx.base.css"
+        <link rel="stylesheet" href="${contextPath}/resources/jqwidgets/styles/jqx.base.css"
               type="text/css" />
         <link rel="stylesheet"
-              href="resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+              href="${contextPath}/resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
 
         <style type="text/css">
             .custom-link-color{
@@ -66,7 +67,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/tychexplore"> <img
-                                src="resources/images/logo.png" alt="TychExplore Logo">
+                                src="${contextPath}/resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
@@ -101,36 +102,36 @@
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Height</th>
-                                    <td style="color: #2d5768;"><b><span id="bHeight"></span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bHeight">${bHeight}</span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <span id="bHash" class="label label-success"></span>
+                                        <span id="bHash" class="label label-success">${bHash}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Found</th>
-                                    <td style="color: #2d5768;"><b><span id="bFound"></span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bFound">${bFound}</span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Difficulty</th>
-                                    <td style="color: #2d5768;"><b><span id="bDifficulty"></span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bDifficulty">${bDifficulty}</span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Reward</th>
-                                    <td style="color: #2d5768;"><b><span id="bReward"></span></b>
+                                    <td style="color: #2d5768;"><b><span id="bReward">${bReward}</span></b>
                                         &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Status</th>
-                                    <td style="color: #2d5768;"><b><span id="bStatus"></span></b></td>
+                                    <td style="color: #2d5768;"><b><span id="bStatus">${bStatus}</span></b></td>
                                 </tr>
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
-                                            <a id="bPrevious" class="label label-info" href="#"></a> 
+                                            <a id="bPrevious" class="label label-info" href="${contextPath}/block/${bPrevious}">${bPrevious}</a> 
                                         </i>
                                     </td>
                                 </tr>
@@ -148,10 +149,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="footer navbar-fixed-bottom bg-info">
             <div class="container-fluid pull-left">
-                  © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+                © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
             </div>
             <div class="container-fluid pull-right">
                 Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
@@ -160,3 +161,4 @@
 
     </body>
 </html>
+
