@@ -106,7 +106,7 @@
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <b><span id="bHash" class="label label-success"></span></b>
+                                        <span id="bHash" class="label label-success"></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -129,7 +129,9 @@
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <b><span id="bPrevious" class="label label-danger"></span></b>
+                                        <i>
+                                            <a id="bPrevious" class="label label-info" href="#"></a> 
+                                        </i>
                                     </td>
                                 </tr>
                             </table>

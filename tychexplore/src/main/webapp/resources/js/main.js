@@ -31,6 +31,7 @@ $(document).ready(function () {
                     $("#bReward").text(json.result.block_header.reward);
                     $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
                     $("#bPrevious").text(json.result.block_header.prev_hash);
+                    $("#bPrevious").attr("href", "block/"+json.result.block_header.prev_hash);
                 },
                 error: function (e) {
                     console.log("ERROR: ", e);
@@ -133,6 +134,7 @@ $(document).ready(function () {
                     $("#bReward").text(json.result.block_header.reward);
                     $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
                     $("#bPrevious").text(json.result.block_header.prev_hash);
+                    $("#bPrevious").attr("href", "block/"+json.result.block_header.prev_hash);
                     $("#bSearchLabel").text("Search Result");
                 }
             },
