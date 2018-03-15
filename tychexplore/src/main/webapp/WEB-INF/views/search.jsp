@@ -286,7 +286,10 @@
 
 
         });
-
+        
+        //Converts timestamp from server side to GMT String equivalent
+        $("#bFound").text(new Date($("#bFound").text() * 1000).toGMTString());
+        
     </script>
 </html>
 

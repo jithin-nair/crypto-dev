@@ -65,27 +65,36 @@
             <nav class="navbar navbar-fixed-top bg-primary" >
                 <div class="container-fluid">
                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#divCollapse" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar bg-success"></span>
+                            <span class="icon-bar bg-success"></span>
+                            <span class="icon-bar bg-success"></span>
+                        </button>
                         <a class="navbar-brand" href="/tychexplore"> <img
                                 src="resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" class="custom-link-color">Home</a></li>
-                        <li><a href="#" class="custom-link-color">Pools</a></li>
-                        <li><a href="#" class="custom-link-color">API</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <div class="navbar-form navbar-left">
-                                <div class="form-group">
-                                    <span class="label label-warning" id="bWarning"></span>
-                                    <input class="form-control mr-sm-2" type="text" name="query" id="query"
-                                           placeholder="Search by block hash/height" style="width: 600px;">
+                    <div class="collapse navbar-collapse" id="divCollapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#" class="custom-link-color">Home</a></li>
+                            <li><a href="#" class="custom-link-color">Pools</a></li>
+                            <li><a href="#" class="custom-link-color">API</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <div class="navbar-form navbar-left">
+                                    <div class="form-group">
+                                        <span class="label label-warning" id="bWarning"></span>
+                                        <input class="form-control mr-sm-2" type="text" name="query" id="query"
+                                               placeholder="Search by block hash/height" style="width: 600px;">
+                                    </div>
+                                    <button class="btn btn-success" id="search" name="search" type="button">Search</button>
                                 </div>
-                                <button class="btn btn-success" id="search" name="search" type="button">Search</button>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
 
@@ -148,10 +157,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="footer navbar-fixed-bottom bg-info">
             <div class="container-fluid pull-left">
-                  © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+                © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
             </div>
             <div class="container-fluid pull-right">
                 Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
