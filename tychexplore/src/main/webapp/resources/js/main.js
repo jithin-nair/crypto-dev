@@ -29,9 +29,9 @@ $(document).ready(function () {
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
-                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
+                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' : 'Not Orphaned');
                     $("#bPrevious").text(json.result.block_header.prev_hash);
-                    $("#bPrevious").attr("href", "block/"+json.result.block_header.prev_hash);
+                    $("#bPrevious").attr("href", "block/" + json.result.block_header.prev_hash);
                 },
                 error: function (e) {
                     console.log("ERROR: ", e);
@@ -59,6 +59,10 @@ $(document).ready(function () {
                         type: 'string',
                         map: 'reward'
                     }, {
+                        name: 'timestamp',
+                        type: 'string',
+                        map: 'timestamp'
+                    }, {
                         name: 'orphan_status',
                         type: 'string',
                         map: 'orphan_status'
@@ -68,12 +72,22 @@ $(document).ready(function () {
                 root: 'blockHeaders'
             };
 
+            var toolTipCustomFormatFn = function (dataSource) {
+                return function (value, itemIndex, serieGroup, group, categoryValue, categoryAxis) {
+                    var timestamp = dataSource.records[itemIndex].timestamp;
+                    var height = dataSource.records[itemIndex].height;
+                    var difficulty = dataSource.records[itemIndex].difficulty;
+                    return "Height: " + height+"</br>Difficulty: " + difficulty+"</br>Found: " + new Date(timestamp * 1000).toLocaleDateString();
+                }
+            };
+
             var dataAdapter = new $.jqx.dataAdapter(source);
 
             // prepare jqxChart settings
             var settings = {
                 title: "Difficulty Graph",
                 description: "Difficulty vs Height",
+                toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
                 enableAnimations: true,
                 showLegend: true,
                 padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -90,15 +104,6 @@ $(document).ready(function () {
                             {
                                 alignEndPointsWithIntervals: false,
                                 type: 'splinearea',
-                                valueAxis:
-                                        {
-                                            visible: true,
-                                            title: {text: 'Index Value'},
-                                            labels: {
-                                                horizontalAlignment: 'right',
-                                                formatSettings: {decimalPlaces: 0}
-                                            }
-                                        },
                                 series: [
                                     {dataField: 'difficulty', displayText: 'difficulty', opacity: 0.7}
                                 ]
@@ -132,9 +137,9 @@ $(document).ready(function () {
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
-                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' :'Not Orphaned');
+                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' : 'Not Orphaned');
                     $("#bPrevious").text(json.result.block_header.prev_hash);
-                    $("#bPrevious").attr("href", "block/"+json.result.block_header.prev_hash);
+                    $("#bPrevious").attr("href", "block/" + json.result.block_header.prev_hash);
                     $("#bSearchLabel").text("Search Result");
                 }
             },

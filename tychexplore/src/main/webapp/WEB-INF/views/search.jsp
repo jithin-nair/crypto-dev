@@ -94,6 +94,16 @@
         </div>
         <!-- END WRAPPER -->
         <div class="container" style="margin-top:60px">
+            <c:if test="${not empty message}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" id="error-alert">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Oops!!</strong> ${message}
+                        </div>
+                    </div>
+                </div>
+            </c:if>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
@@ -177,7 +187,7 @@
                     console.log("ERROR: ", e);
                 },
                 complete: function (jqXHR, textStatus) {
- 
+
                     var url = "/tychexplore/getGraphData";
                     // prepare the data
                     var source = {
@@ -286,10 +296,10 @@
 
 
         });
-        
+
         //Converts timestamp from server side to GMT String equivalent
         $("#bFound").text(new Date($("#bFound").text() * 1000).toGMTString());
-        
+
     </script>
 </html>
 

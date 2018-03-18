@@ -33,7 +33,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     TycheExploreConfig tycheExploreConfig;
 
     @Override
-    public BlockResponse getBlockResponseByHeight(Integer height) {
+    public BlockResponse getBlockResponseByHeight(Integer height) throws RuntimeException{
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -52,7 +52,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
 
     @Override
-    public BlockResponse getBlockResponseByHash(String hash) {
+    public BlockResponse getBlockResponseByHash(String hash) throws RuntimeException{
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -71,12 +71,12 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
 
     @Override
-    public BlockResponse getFirstBlockResponse() {
+    public BlockResponse getFirstBlockResponse() throws RuntimeException{
         return getBlockResponseByHeight(0);
     }
 
     @Override
-    public BlockResponse getLastBlockResponse() {
+    public BlockResponse getLastBlockResponse() throws RuntimeException{
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -91,7 +91,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
 
     @Override
-    public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) {
+    public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) throws RuntimeException{
         ResponseVO responseVO = new ResponseVO();
         List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
         String uri = tycheExploreConfig.getRpcServerUrl();
@@ -127,7 +127,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
 
     @Override
-    public ResponseVO getBlockSamples(Integer samplingRate) {
+    public ResponseVO getBlockSamples(Integer samplingRate) throws RuntimeException{
         ResponseVO responseVO = new ResponseVO();
         BlockResponse lastBlockResponse = getLastBlockResponse();
         Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
