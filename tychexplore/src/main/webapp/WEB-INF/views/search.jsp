@@ -66,14 +66,14 @@
             <nav class="navbar navbar-fixed-top bg-primary" >
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/tychexplore"> <img
+                        <a class="navbar-brand" href="${contextPath}"> <img
                                 src="${contextPath}/resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><a href="#" class="custom-link-color">Home</a></li>
-                        <li><a href="#" class="custom-link-color">Pools</a></li>
-                        <li><a href="#" class="custom-link-color">API</a></li>
+                        <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                        <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
+                                <i class="fa fa-cloud"></i> Pools </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -83,7 +83,9 @@
                                     <input class="form-control mr-sm-2" type="text" name="query" id="query"
                                            placeholder="Search by block hash/height" style="width: 600px;">
                                 </div>
-                                <button class="btn btn-success" id="search" name="search" type="button">Search</button>
+                                <button class="btn btn-success" id="search" name="search" type="button">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -93,7 +95,17 @@
 
         </div>
         <!-- END WRAPPER -->
-        <div class="container" style="margin-top:60px">
+        <div class="container" style="margin-top:60px;margin-bottom:30px;">
+            <c:if test="${not empty message}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" id="error-alert">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Oops!!</strong> ${message}
+                        </div>
+                    </div>
+                </div>
+            </c:if>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
@@ -150,14 +162,16 @@
             </div>
         </div>
 
-        <div class="footer navbar-fixed-bottom bg-info">
-            <div class="container-fluid pull-left">
-                © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+        <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
+            <div class="container-fluid">
+                <span class="pull-left">
+                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>TycheCash</strong></a>
+                </span>
+                <span class="pull-right"><i class="fa fa-github"></i>
+                    <a href="https://github.com/jithin-nair/crypto-dev" target="_blank"><strong>TychExplore</strong></a>
+                </span>
             </div>
-            <div class="container-fluid pull-right">
-                Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
-            </div>
-        </div>
+        </footer>
 
     </body>
     <script>
@@ -177,7 +191,7 @@
                     console.log("ERROR: ", e);
                 },
                 complete: function (jqXHR, textStatus) {
- 
+
                     var url = "/tychexplore/getGraphData";
                     // prepare the data
                     var source = {
@@ -199,6 +213,10 @@
                                 type: 'string',
                                 map: 'reward'
                             }, {
+                                name: 'timestamp',
+                                type: 'string',
+                                map: 'timestamp'
+                            }, {
                                 name: 'orphan_status',
                                 type: 'string',
                                 map: 'orphan_status'
@@ -208,12 +226,22 @@
                         root: 'blockHeaders'
                     };
 
+                    var toolTipCustomFormatFn = function (dataSource) {
+                        return function (value, itemIndex, serieGroup, group, categoryValue, categoryAxis) {
+                            var timestamp = dataSource.records[itemIndex].timestamp;
+                            var height = dataSource.records[itemIndex].height;
+                            var difficulty = dataSource.records[itemIndex].difficulty;
+                            return "Height: " + height + "</br>Difficulty: " + difficulty + "</br>Found: " + new Date(timestamp * 1000).toLocaleDateString();
+                        }
+                    };
+
                     var dataAdapter = new $.jqx.dataAdapter(source);
 
                     // prepare jqxChart settings
                     var settings = {
                         title: "Difficulty Graph",
                         description: "Difficulty vs Height",
+                        toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
                         enableAnimations: true,
                         showLegend: true,
                         padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -230,15 +258,6 @@
                                     {
                                         alignEndPointsWithIntervals: false,
                                         type: 'splinearea',
-                                        valueAxis:
-                                                {
-                                                    visible: true,
-                                                    title: {text: 'Index Value'},
-                                                    labels: {
-                                                        horizontalAlignment: 'right',
-                                                        formatSettings: {decimalPlaces: 0}
-                                                    }
-                                                },
                                         series: [
                                             {dataField: 'difficulty', displayText: 'difficulty', opacity: 0.7}
                                         ]
@@ -286,6 +305,9 @@
 
 
         });
+
+        //Converts timestamp from server side to GMT String equivalent
+        $("#bFound").text(new Date($("#bFound").text() * 1000).toGMTString());
 
     </script>
 </html>

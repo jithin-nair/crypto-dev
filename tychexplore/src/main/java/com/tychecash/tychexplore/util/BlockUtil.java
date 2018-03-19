@@ -26,6 +26,8 @@ public class BlockUtil {
     }
 
     public static String insertCharAt(String st, char ch, int index) throws NullPointerException, IndexOutOfBoundsException {
-        return st.substring(0, index) + ch + st.substring(index, st.length());
+        String reward = new StringBuilder(st).reverse().toString();
+        reward = reward.substring(0, index) + ch + reward.substring(index, reward.length());
+        return new StringBuilder(reward).reverse().toString();
     }
 }

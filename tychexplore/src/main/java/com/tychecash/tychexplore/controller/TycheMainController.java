@@ -26,23 +26,28 @@ public class TycheMainController {
     @Autowired
     private TycheExploreService tycheExploreService;
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showHome(Model model) {
-
         return "index";
     }
 
     @RequestMapping(value = "/block/{hash}", method = RequestMethod.GET)
     public ModelAndView foo(ModelAndView modelAndView, @PathVariable("hash") String hash) {
-        BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(hash);
-        modelAndView.addObject("bHeight", blockResponse.getResult().getBlock_header().getHeight());
-        modelAndView.addObject("bHash", blockResponse.getResult().getBlock_header().getHash());
-        modelAndView.addObject("bFound", blockResponse.getResult().getBlock_header().getTimestamp());
-        modelAndView.addObject("bDifficulty", blockResponse.getResult().getBlock_header().getDifficulty());
-        modelAndView.addObject("bReward", blockResponse.getResult().getBlock_header().getReward());
-        modelAndView.addObject("bStatus", (blockResponse.getResult().getBlock_header().getOrphan_status().equalsIgnoreCase("true")) ? "Orphaned" : "Not Orphaned");
-        modelAndView.addObject("bPrevious", blockResponse.getResult().getBlock_header().getPrev_hash());
-        modelAndView.setViewName("search");
+        try {
+            BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(hash);
+            modelAndView.addObject("bHeight", blockResponse.getResult().getBlock_header().getHeight());
+            modelAndView.addObject("bHash", blockResponse.getResult().getBlock_header().getHash());
+            modelAndView.addObject("bFound", blockResponse.getResult().getBlock_header().getTimestamp());
+            modelAndView.addObject("bDifficulty", blockResponse.getResult().getBlock_header().getDifficulty());
+            modelAndView.addObject("bReward", blockResponse.getResult().getBlock_header().getReward());
+            modelAndView.addObject("bStatus", (blockResponse.getResult().getBlock_header().getOrphan_status().equalsIgnoreCase("true")) ? "Orphaned" : "Not Orphaned");
+            modelAndView.addObject("bPrevious", blockResponse.getResult().getBlock_header().getPrev_hash());
+            modelAndView.setViewName("search");
+        } catch (RuntimeException ex) {
+            modelAndView.addObject("message", "Nothing in the blockchain has been found that matches the search"
+                    + "<br>Note: There might be some delay for latest details to be found");
+            modelAndView.setViewName("invalid");
+        }
         return modelAndView;
     }
 }
