@@ -73,7 +73,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
                         <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
-                                    <i class="fa fa-cloud"></i> Pools </a></li>
+                                <i class="fa fa-cloud"></i> Pools </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -213,6 +213,10 @@
                                 type: 'string',
                                 map: 'reward'
                             }, {
+                                name: 'timestamp',
+                                type: 'string',
+                                map: 'timestamp'
+                            }, {
                                 name: 'orphan_status',
                                 type: 'string',
                                 map: 'orphan_status'
@@ -222,12 +226,22 @@
                         root: 'blockHeaders'
                     };
 
+                    var toolTipCustomFormatFn = function (dataSource) {
+                        return function (value, itemIndex, serieGroup, group, categoryValue, categoryAxis) {
+                            var timestamp = dataSource.records[itemIndex].timestamp;
+                            var height = dataSource.records[itemIndex].height;
+                            var difficulty = dataSource.records[itemIndex].difficulty;
+                            return "Height: " + height + "</br>Difficulty: " + difficulty + "</br>Found: " + new Date(timestamp * 1000).toLocaleDateString();
+                        }
+                    };
+
                     var dataAdapter = new $.jqx.dataAdapter(source);
 
                     // prepare jqxChart settings
                     var settings = {
                         title: "Difficulty Graph",
                         description: "Difficulty vs Height",
+                        toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
                         enableAnimations: true,
                         showLegend: true,
                         padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -244,15 +258,6 @@
                                     {
                                         alignEndPointsWithIntervals: false,
                                         type: 'splinearea',
-                                        valueAxis:
-                                                {
-                                                    visible: true,
-                                                    title: {text: 'Index Value'},
-                                                    labels: {
-                                                        horizontalAlignment: 'right',
-                                                        formatSettings: {decimalPlaces: 0}
-                                                    }
-                                                },
                                         series: [
                                             {dataField: 'difficulty', displayText: 'difficulty', opacity: 0.7}
                                         ]
