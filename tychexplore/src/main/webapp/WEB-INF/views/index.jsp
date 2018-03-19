@@ -7,6 +7,7 @@
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,39 +18,39 @@
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <!-- add the jQuery script -->
         <script type="text/javascript"
-        src="resources/scripts/jquery-1.11.1.min.js"></script>
+        src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
         <!-- add the bootstrap script -->
-        <script src="resources/scripts/bootstrap.min.js"></script>
+        <script src="${contextPath}/resources/scripts/bootstrap.min.js"></script>
         <!-- add the jQWidgets framework -->
-        <script type="text/javascript" src="resources/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxcore.js"></script>
         <!-- add one or more widgets -->
-        <script type="text/javascript" src="resources/jqwidgets/jqxdata.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxbuttons.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxscrollbar.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdata.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxlistbox.js"></script>
         <script type="text/javascript"
         src="resources/jqwidgets/jqxdropdownlist.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxdatatable.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxpanel.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdatatable.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxpanel.js"></script>
         <script type="text/javascript"
-        src="resources/jqwidgets/jqxradiobutton.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxinput.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxchart.core.js"></script>
-        <script type="text/javascript" src="resources/jqwidgets/jqxdraw.js"></script>
+        src="${contextPath}/resources/jqwidgets/jqxradiobutton.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxinput.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxchart.core.js"></script>
+        <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdraw.js"></script>
 
-        <script src="resources/js/common.js"></script>
-        <script src="resources/js/main.js"></script>
+        <script src="${contextPath}/resources/js/common.js"></script>
+        <script src="${contextPath}/resources/js/main.js"></script>
 
         <!-- VENDOR CSS -->
-        <link rel="stylesheet" href="resources/styles/bootstrap.min.css">
+        <link rel="stylesheet" href="${contextPath}/resources/styles/bootstrap.min.css">
         <link rel="stylesheet"
-              href="resources/font-awesome/css/font-awesome.min.css">
+              href="${contextPath}/resources/font-awesome/css/font-awesome.min.css">
 
         <!-- add the jQWidgets base styles and one of the theme stylesheets -->
-        <link rel="stylesheet" href="resources/jqwidgets/styles/jqx.base.css"
+        <link rel="stylesheet" href="${contextPath}/resources/jqwidgets/styles/jqx.base.css"
               type="text/css" />
         <link rel="stylesheet"
-              href="resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+              href="${contextPath}/resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
 
         <style type="text/css">
             .custom-link-color{
@@ -71,15 +72,15 @@
                             <span class="icon-bar bg-success"></span>
                             <span class="icon-bar bg-success"></span>
                         </button>
-                        <a class="navbar-brand" href="/tychexplore"> <img
+                        <a class="navbar-brand" href="${contextPath}"> <img
                                 src="resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="divCollapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="#" class="custom-link-color">Home</a></li>
-                            <li><a href="#" class="custom-link-color">Pools</a></li>
-                            <li><a href="#" class="custom-link-color">API</a></li>
+                            <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                            <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
+                                    <i class="fa fa-cloud"></i> Pools </a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -89,7 +90,9 @@
                                         <input class="form-control mr-sm-2" type="text" name="query" id="query"
                                                placeholder="Search by block hash/height" style="width: 600px;">
                                     </div>
-                                    <button class="btn btn-success" id="search" name="search" type="button">Search</button>
+                                    <button class="btn btn-success" id="search" name="search" type="button">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
                                 </div>
                             </li>
                         </ul>
@@ -101,7 +104,7 @@
 
         </div>
         <!-- END WRAPPER -->
-        <div class="container" style="margin-top:60px">
+        <div class="container" style="margin-top:60px;margin-bottom:30px;">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
@@ -158,14 +161,16 @@
             </div>
         </div>
 
-        <div class="footer navbar-fixed-bottom bg-info">
-            <div class="container-fluid pull-left">
-                © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+        <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
+            <div class="container-fluid">
+                <span class="pull-left">
+                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>TycheCash</strong></a>
+                </span>
+                <span class="pull-right"><i class="fa fa-github"></i>
+                    <a href="https://github.com/jithin-nair/crypto-dev" target="_blank"><strong>TychExplore</strong></a>
+                </span>
             </div>
-            <div class="container-fluid pull-right">
-                Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
-            </div>
-        </div>
+        </footer>
 
     </body>
 </html>

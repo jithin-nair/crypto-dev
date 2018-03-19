@@ -33,7 +33,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     TycheExploreConfig tycheExploreConfig;
 
     @Override
-    public BlockResponse getBlockResponseByHeight(Integer height) throws RuntimeException{
+    public BlockResponse getBlockResponseByHeight(Integer height) throws RuntimeException {
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -45,14 +45,12 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-        System.out.println("Input : " + blockRequest.toString());
-        System.out.println("output : " + blockResponse.toString());
         return blockResponse;
         // Tools | Templates.
     }
 
     @Override
-    public BlockResponse getBlockResponseByHash(String hash) throws RuntimeException{
+    public BlockResponse getBlockResponseByHash(String hash) throws RuntimeException {
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -64,19 +62,17 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-        System.out.println("Input : " + blockRequest.toString());
-        System.out.println("output : " + blockResponse.toString());
         return blockResponse;
 
     }
 
     @Override
-    public BlockResponse getFirstBlockResponse() throws RuntimeException{
+    public BlockResponse getFirstBlockResponse() throws RuntimeException {
         return getBlockResponseByHeight(0);
     }
 
     @Override
-    public BlockResponse getLastBlockResponse() throws RuntimeException{
+    public BlockResponse getLastBlockResponse() throws RuntimeException {
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -85,13 +81,11 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
-        System.out.println("Input : " + blockRequest.toString());
-        System.out.println("output : " + blockResponse.toString());
         return blockResponse;
     }
 
     @Override
-    public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) throws RuntimeException{
+    public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) throws RuntimeException {
         ResponseVO responseVO = new ResponseVO();
         List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
         String uri = tycheExploreConfig.getRpcServerUrl();
@@ -109,8 +103,6 @@ public class TycheExploreServiceImpl implements TycheExploreService {
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
                 blockResponses.add(blockResponse);
-                System.out.println("Input : " + blockRequest.toString());
-                System.out.println("output : " + blockResponse.toString());
             }
         }
         List<BlockHeader> blockHeaders = new ArrayList<>();
@@ -127,7 +119,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
 
     @Override
-    public ResponseVO getBlockSamples(Integer samplingRate) throws RuntimeException{
+    public ResponseVO getBlockSamples(Integer samplingRate) throws RuntimeException {
         ResponseVO responseVO = new ResponseVO();
         BlockResponse lastBlockResponse = getLastBlockResponse();
         Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
@@ -147,8 +139,6 @@ public class TycheExploreServiceImpl implements TycheExploreService {
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
                 blockResponses.add(blockResponse);
-                System.out.println("Input : " + blockRequest.toString());
-                System.out.println("output : " + blockResponse.toString());
             }
         }
         List<BlockHeader> blockHeaders = new ArrayList<>();

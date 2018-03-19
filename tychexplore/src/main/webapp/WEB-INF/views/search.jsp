@@ -66,14 +66,14 @@
             <nav class="navbar navbar-fixed-top bg-primary" >
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/tychexplore"> <img
+                        <a class="navbar-brand" href="${contextPath}"> <img
                                 src="${contextPath}/resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><a href="#" class="custom-link-color">Home</a></li>
-                        <li><a href="#" class="custom-link-color">Pools</a></li>
-                        <li><a href="#" class="custom-link-color">API</a></li>
+                        <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                        <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
+                                    <i class="fa fa-cloud"></i> Pools </a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -83,7 +83,9 @@
                                     <input class="form-control mr-sm-2" type="text" name="query" id="query"
                                            placeholder="Search by block hash/height" style="width: 600px;">
                                 </div>
-                                <button class="btn btn-success" id="search" name="search" type="button">Search</button>
+                                <button class="btn btn-success" id="search" name="search" type="button">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -93,7 +95,7 @@
 
         </div>
         <!-- END WRAPPER -->
-        <div class="container" style="margin-top:60px">
+        <div class="container" style="margin-top:60px;margin-bottom:30px;">
             <c:if test="${not empty message}">
                 <div class="row">
                     <div class="col-md-12">
@@ -160,14 +162,16 @@
             </div>
         </div>
 
-        <div class="footer navbar-fixed-bottom bg-info">
-            <div class="container-fluid pull-left">
-                © 2018 Copyright: <a href="#"><strong>http://tychexplore.tychecash.net</strong></a>
+        <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
+            <div class="container-fluid">
+                <span class="pull-left">
+                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>TycheCash</strong></a>
+                </span>
+                <span class="pull-right"><i class="fa fa-github"></i>
+                    <a href="https://github.com/jithin-nair/crypto-dev" target="_blank"><strong>TychExplore</strong></a>
+                </span>
             </div>
-            <div class="container-fluid pull-right">
-                Fork on github: <a href="#"><strong>https://github.com/jithin-nair/crypto-dev.git</strong></a>
-            </div>
-        </div>
+        </footer>
 
     </body>
     <script>

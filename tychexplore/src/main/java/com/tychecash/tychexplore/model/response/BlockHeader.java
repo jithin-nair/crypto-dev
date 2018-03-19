@@ -72,7 +72,7 @@ public class BlockHeader {
     }
 
     public void setReward(String reward) {
-        this.reward = BlockUtil.insertCharAt(reward, '.', 6);
+        this.reward = BlockUtil.insertCharAt(reward, '.', 8);
     }
 
     public String getNonce() {
